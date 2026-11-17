@@ -39,6 +39,7 @@ import {
   type Expr,
 } from './engine';
 import { decodeProgress, freshProgress, STORAGE_KEY, type Progress } from './progress';
+import DiscoverySummary from './DiscoverySummary';
 
 type StackEntry = { expr: Expr; label?: string };
 type Notice = { text: string; kind: 'error' | 'success' | 'info' };
@@ -767,12 +768,19 @@ export default function App() {
                     </div>
                   )}
                   {complete && (
-                    <button className="next-discovery" onClick={next}>
-                      {earned.size === total
-                        ? 'You’ve built the full calculator'
-                        : 'On to the next discovery'}{' '}
-                      <ArrowRight size={16} />
-                    </button>
+                    <>
+                      <DiscoverySummary
+                        definition={d}
+                        recipe={progress.solutions[active] ?? d.recipe}
+                        onInspect={setInspect}
+                      />
+                      <button className="next-discovery" onClick={next}>
+                        {earned.size === total
+                          ? 'You’ve built the full calculator'
+                          : 'On to the next discovery'}{' '}
+                        <ArrowRight size={19} />
+                      </button>
+                    </>
                   )}
                 </>
               )}

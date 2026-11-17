@@ -1249,12 +1249,156 @@ footer {
 .next-discovery {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
   gap: 18px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 550;
-  color: #628142;
-  margin-top: 16px;
-  padding: 0;
+  color: #f4fae9;
+  background: var(--green);
+  border-radius: 6px;
+  margin-top: 18px;
+  padding: 15px 18px;
+  text-align: left;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.next-discovery:hover {
+  background: #37553e;
+}
+.next-discovery:active {
+  transform: translateY(1px);
+}
+.discovery-summary {
+  border: 1px solid #cddcbb;
+  background: #f1f6e9;
+  border-radius: 7px;
+  padding: 17px;
+  margin-top: 20px;
+  min-width: 0;
+}
+.discovery-summary-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.discovery-summary-heading > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 9px var(--mono);
+  letter-spacing: 1px;
+  color: #66844d;
+}
+.discovery-summary-heading > b {
+  font: 25px var(--serif);
+  color: #54753d;
+}
+.discovered-shortcut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 15px;
+  border-bottom: 1px solid #dce6cf;
+  padding-bottom: 14px;
+}
+.discovered-shortcut > span {
+  font: 8px var(--mono);
+  letter-spacing: 0.7px;
+  color: #80936e;
+}
+.discovered-shortcut > code {
+  color: #3d5c2f;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.discovered-form {
+  margin-top: 15px;
+  min-width: 0;
+}
+.discovered-form h4 {
+  color: #647c51;
+  font-size: 11px;
+  font-weight: 550;
+  margin: 0 0 8px;
+}
+.discovered-form > code {
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid #e0e8d5;
+  background: #fbfdf6;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  color: #526e40;
+}
+.two-key-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.two-key-heading h4 {
+  margin: 0;
+}
+.primitive-badges {
+  display: flex;
+  gap: 4px;
+}
+.primitive-badges > span {
+  background: #e4edd7;
+  border: 1px solid #cfddbc;
+  border-radius: 3px;
+  font: 8px var(--mono);
+  color: #637f4b;
+  padding: 3px 6px;
+}
+.discovered-expansion {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: auto;
+  max-height: 180px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #d8e3cb;
+  border-radius: 4px;
+  background: #e9f0df;
+  color: #4c693b;
+  font-size: 10px;
+  line-height: 1.9;
+}
+.discovery-summary-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 9px;
+  font: 8px var(--mono);
+  color: #879c73;
+}
+.discovery-summary-meta button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 0;
+  color: #68874e;
+  font:
+    10px 'DM Sans',
+    sans-serif;
+}
+.discovery-explanation {
+  margin-top: 15px;
+  color: #7a8e67;
+  font-size: 11px;
+  line-height: 1.8;
 }
 .locked-message {
   background: #eef1e6;
@@ -2477,7 +2621,7 @@ nav button {
   font-size: 10px;
 }
 .next-discovery {
-  font-size: 12px;
+  font-size: 13px;
 }
 .tiny {
   font-size: 11px;
