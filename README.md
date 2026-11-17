@@ -6,6 +6,8 @@ An interactive, no-account math lab: begin with **1** and **EML**, recover
 exponential, logarithm and subtraction, then solve challenges to grow a
 scientific calculator. Every earned key shows its EML construction.
 
+**[Try EML Lab → emllab.vercel.app](https://emllab.vercel.app/)**
+
 ![EML Lab workbench](docs/preview.jpg)
 
 ## Run locally
