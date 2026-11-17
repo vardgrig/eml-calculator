@@ -6,6 +6,8 @@ An interactive, no-account math lab: begin with **1** and **EML**, recover
 exponential, logarithm and subtraction, then solve challenges to grow a
 scientific calculator. Every earned key shows its EML construction.
 
+![EML Lab workbench](docs/preview.jpg)
+
 ## Run locally
 
 Use Node.js 24 and npm.
@@ -22,6 +24,11 @@ npm test
 npm run build
 npm run preview
 ```
+
+The automated suite currently contains 83 tests. GitHub Actions also checks
+the tests and production build on Linux. Desktop and 390-pixel phone layouts,
+guided unlocks, saved-progress recovery, earned keys and expression inspection
+have been checked in a browser.
 
 ## Deploy to Vercel
 
