@@ -23,7 +23,6 @@ import {
 import {
   byId,
   definitions,
-  evaluate,
   expand,
   expressionStats,
   format,
@@ -40,8 +39,10 @@ import {
 } from './engine';
 import { decodeProgress, freshProgress, STORAGE_KEY, type Progress } from './progress';
 import DiscoverySummary from './DiscoverySummary';
+import FormulaConsole from './FormulaConsole';
+import { calculate, combine, type Calculation } from './calculator';
 
-type StackEntry = { expr: Expr; label?: string };
+type StackEntry = Calculation & { label?: string };
 type Notice = { text: string; kind: 'error' | 'success' | 'info' };
 const video = 'https://www.youtube.com/watch?v=LxVW3b8jVdE';
 const repo = 'https://github.com/vardgrig/eml-calculator';
@@ -114,9 +115,11 @@ export default function App() {
   const [xValue, setXValue] = useState('2');
   const [yValue, setYValue] = useState('3');
   const [entry, setEntry] = useState('');
+  const [calculatorFormula, setCalculatorFormula] = useState('');
   const [copied, setCopied] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
   const formulaRef = useRef<HTMLTextAreaElement>(null);
+  const calculatorFormulaRef = useRef<HTMLTextAreaElement>(null);
   const d = byId[active];
   const earned = new Set(progress.unlocked);
   const complete = earned.has(active);
@@ -125,14 +128,15 @@ export default function App() {
   const foundationCount = foundations.filter((v) => earned.has(v.id)).length;
   const total = definitions.length;
   const top = stack.at(-1);
-  const vars = () => ({ x: parseValue(xValue), y: parseValue(yValue) });
-  const valueOf = (expr: Expr) => {
-    try {
-      return format(evaluate(expr, vars()));
-    } catch {
-      return '—';
-    }
+  const vars = (expr?: Expr) => {
+    const uses = (name: string, part: Expr): boolean =>
+      part.name === name || part.args.some((arg) => uses(name, arg));
+    return {
+      x: !expr || uses('x', expr) ? parseValue(xValue) : undefined,
+      y: !expr || uses('y', expr) ? parseValue(yValue) : undefined,
+    };
   };
+  const valueOf = (item: StackEntry) => format(item.value);
 
   useEffect(() => {
     try {
@@ -172,14 +176,35 @@ export default function App() {
   function push(expr: Expr, label?: string) {
     if (stack.length >= 100) {
       setCalcNotice('The stack is full. Clear or combine some values.');
-      return;
+      return false;
     }
     const size = expressionStats(expr);
     if (size.nodes > 4000 || size.depth > 100) {
       setCalcNotice('This expression is too large. Start a fresh calculation.');
-      return;
+      return false;
     }
-    mutate([...stack, { expr, label }]);
+    try {
+      mutate([...stack, { ...calculate(expr, vars(expr)), label }]);
+      return true;
+    } catch (err) {
+      setCalcNotice((err as Error).message);
+      return false;
+    }
+  }
+  function loadCalculatorFormula(source: string) {
+    setCalculatorFormula(source);
+    setCalcNotice('');
+    calculatorFormulaRef.current?.focus();
+    calculatorFormulaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function runCalculatorFormula() {
+    try {
+      const expr = parse(calculatorFormula, earned);
+      if (push(expr))
+        setCalcNotice('Added the result to the stack. Continue with the calculator keys above.');
+    } catch (err) {
+      setCalcNotice((err as Error).message);
+    }
   }
   function operate(id: string) {
     const arity = id === 'eml' ? 2 : byId[id].arity;
@@ -189,16 +214,15 @@ export default function App() {
       );
       return;
     }
-    const args = arity ? stack.slice(-arity).map((v) => v.expr) : [];
-    const expr = node(id, ...args);
+    const operands = arity ? stack.slice(-arity) : [];
+    const expr = node(id, ...operands.map((operand) => operand.expr));
     const size = expressionStats(expr);
     if (size.nodes > 4000 || size.depth > 100) {
       setCalcNotice('This expression is too large. Start a fresh calculation.');
       return;
     }
     try {
-      evaluate(expr, vars());
-      mutate([...stack.slice(0, stack.length - arity), { expr }]);
+      mutate([...stack.slice(0, stack.length - arity), combine(id, operands)]);
     } catch (err) {
       setCalcNotice((err as Error).message);
     }
@@ -429,11 +453,14 @@ export default function App() {
                 </span>
               </div>
               <div className={'result ' + (!top ? 'empty-result' : '')} aria-live="polite">
-                {top ? valueOf(top.expr) : 'Let’s make something.'}
+                {top ? valueOf(top) : 'Let’s make something.'}
               </div>
               <div className="display-expression">
                 {top ? printBounded(top.expr, 130) : 'Press 1 twice, then EML. See what happens.'}
               </div>
+              {!!top?.inputs.length && (
+                <div className="display-inputs">Inputs used: {top.inputs.join(' · ')}</div>
+              )}
               {top && (
                 <button
                   className="inspect-result"
@@ -475,11 +502,11 @@ export default function App() {
                   <button
                     key={i}
                     onClick={() => setInspect(item.expr)}
-                    title={printBounded(item.expr, 150)}
+                    title={[printBounded(item.expr, 150), ...item.inputs].join(' · ')}
                     className={i === stack.length - 1 ? 'stack-chip top-chip' : 'stack-chip'}
                   >
                     <small>{i + 1}</small>
-                    {valueOf(item.expr)}
+                    {valueOf(item)}
                     {i === stack.length - 1 && <span>TOP</span>}
                   </button>
                 ))
@@ -560,6 +587,20 @@ export default function App() {
                 )}
               </div>
             )}
+            <FormulaConsole
+              source={calculatorFormula}
+              onSourceChange={setCalculatorFormula}
+              x={xValue}
+              y={yValue}
+              onXChange={setXValue}
+              onYChange={setYValue}
+              onCalculate={runCalculatorFormula}
+              inputRef={calculatorFormulaRef}
+              hasResult={!!top}
+              onUseResult={() => {
+                if (top) setXValue(top.value.toString());
+              }}
+            />
             {calcNotice && (
               <p role="status" className="calc-notice">
                 {calcNotice}
@@ -715,8 +756,7 @@ export default function App() {
                       onClick={() => {
                         try {
                           const expr = parse(formula, earned);
-                          evaluate(expr, vars());
-                          push(expr);
+                          if (!push(expr)) return;
                           setNotice({
                             kind: 'info',
                             text: `Added to the calculator with x = ${xValue}, y = ${yValue}. Change these input values in the field guide.`,
@@ -773,6 +813,7 @@ export default function App() {
                         definition={d}
                         recipe={progress.solutions[active] ?? d.recipe}
                         onInspect={setInspect}
+                        onUse={loadCalculatorFormula}
                       />
                       <button className="next-discovery" onClick={next}>
                         {earned.size === total
@@ -803,7 +844,7 @@ export default function App() {
           </span>
           <button
             onClick={() => {
-              mutate([{ expr: one }, { expr: one }]);
+              mutate([calculate(one, {}), calculate(one, {})]);
             }}
           >
             Set up 1, 1 <ArrowRight size="0.8125rem" />
@@ -1006,6 +1047,15 @@ export default function App() {
                   <Copy size="0.9375rem" />
                   {copied ? 'Copied' : 'Copy EML expression'}
                 </button>
+                <button
+                  className="text-button"
+                  onClick={() => {
+                    setInspect(null);
+                    loadCalculatorFormula(print(inspect));
+                  }}
+                >
+                  Use in calculator <ArrowRight size="0.875rem" />
+                </button>
               </div>
               <p className="tiny muted">
                 Earned keys use stable mathematical identities for evaluation. Fully expanded EML
@@ -1048,6 +1098,12 @@ export default function App() {
               </p>
               <h3>Complex numbers & numerical scope</h3>
               <p>
+                Use the calculator’s formula box to paste an EML expression, set x and y, and add
+                its result to the stack. Results capture their input values, so changing the fields
+                affects only your next calculation. The expression remains a reusable template; the
+                display lists the inputs used for the calculated number.
+              </p>
+              <p>
                 π needs complex intermediate values. EML uses a logarithm with argument in [−π, π),
                 making the derived ln agree with the principal logarithm for negative real inputs.
                 Earned ln, powers, and scientific functions use standard principal complex values.
@@ -1070,8 +1126,9 @@ export default function App() {
               <div className="variable-settings">
                 <h3>Playground input values</h3>
                 <p>
-                  These set x and y for expressions sent from a challenge to the calculator. They do
-                  not change the challenge tests.
+                  These are the same x and y fields shown in the calculator’s formula box. They
+                  affect new calculations, and do not change the challenge tests or existing stack
+                  values.
                 </p>
                 <label>
                   x<input value={xValue} onChange={(e) => setXValue(e.target.value)} />
@@ -1147,6 +1204,7 @@ export default function App() {
                     setFormula('');
                     setNotice(null);
                     setStack([]);
+                    setCalculatorFormula('');
                     setHistory([]);
                     setExpanded(false);
                     setModal(null);

@@ -2934,3 +2934,142 @@ nav button {
     justify-content: space-between;
   }
 }
+.formula-console {
+  margin-top: 1.4rem;
+  padding: 1rem;
+  border: 1px solid #d8e1ca;
+  border-radius: 0.4rem;
+  background: #f5f8ed;
+  min-width: 0;
+}
+.formula-console-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #617e49;
+}
+.formula-console-heading h3 {
+  font-size: 0.8rem;
+  font-weight: 550;
+  margin: 0;
+}
+.formula-console > p {
+  font-size: 0.65rem;
+  line-height: 1.8;
+  color: #839570;
+  margin: 0.5rem 0 0.8rem;
+}
+.formula-console > label {
+  font: 0.55rem var(--mono);
+  color: #7b9068;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.formula-console textarea {
+  display: block;
+  width: 100%;
+  min-height: 6rem;
+  resize: vertical;
+  padding: 0.7rem;
+  border: 1px solid #d6e0c9;
+  border-radius: 0.25rem;
+  background: #fffef9;
+  color: #456338;
+  font: 0.65rem/1.85 var(--mono);
+  overflow-wrap: anywhere;
+}
+.formula-console .formula-console-help {
+  font-size: 0.55rem;
+  line-height: 1.8;
+  margin: 0.5rem 0 0;
+}
+.formula-console-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.formula-console-inputs > label {
+  display: flex;
+  flex: 1 1 4.5rem;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.3rem;
+  font: 0.65rem var(--mono);
+  color: #7c9269;
+}
+.formula-console-inputs input {
+  width: 100%;
+  min-width: 0;
+  background: #fffef9;
+  border: 1px solid #d6e0c9;
+  border-radius: 0.25rem;
+  padding: 0.55rem;
+  font: 0.7rem var(--mono);
+  color: #4c6b3d;
+}
+.formula-console-inputs > button {
+  font-size: 0.6rem;
+  color: #68884e;
+  padding: 0.65rem 0;
+  white-space: nowrap;
+}
+.formula-console-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  background: var(--green);
+  color: #f4fae9;
+  border-radius: 0.3rem;
+  min-height: 2.4rem;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.65rem;
+  line-height: 1.6;
+}
+.formula-console-submit:hover:not(:disabled) {
+  background: #37553e;
+}
+.display-inputs {
+  margin-top: 0.4rem;
+  font: 0.55rem/1.7 var(--mono);
+  color: #79916a;
+  overflow-wrap: anywhere;
+  padding-right: 1rem;
+}
+.discovery-use-formula {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  margin-top: 0.8rem;
+  background: #e2ecd5;
+  color: #5d7d44;
+  border: 1px solid #c9d9b7;
+  border-radius: 0.25rem;
+  font-size: 0.6rem;
+}
+.discovery-use-formula:hover {
+  background: #d7e5c7;
+}
+@media (max-width: 600px) {
+  .formula-console {
+    padding: 0.8rem;
+  }
+  .formula-console textarea,
+  .formula-console-inputs input {
+    font-size: 0.8rem;
+  }
+  .formula-console-inputs > button {
+    flex-basis: 100%;
+    text-align: left;
+    padding: 0.2rem 0;
+  }
+  .modal-actions {
+    flex-wrap: wrap;
+  }
+}

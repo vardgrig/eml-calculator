@@ -585,6 +585,16 @@ export function evaluate(a: Expr, variables: { x?: Complex; y?: Complex } = {}):
     }
     const aValue = evaluate(left, variables),
       bValue = evaluate(right, variables);
+    // Keep IEEE-754 real limits signed: complex.js treats subtraction involving
+    // infinity as an unsigned complex infinity, losing exp(−Infinity) = 0.
+    if (aValue.im === 0 && bValue.im === 0 && bValue.re >= 0) {
+      const real = Math.exp(aValue.re) - Math.log(bValue.re);
+      if (Number.isNaN(real))
+        throw Error(
+          'An intermediate value is undefined or too large. Try an earned shortcut for stable evaluation.',
+        );
+      return new Complex(real, 0);
+    }
     if (isOne(right)) return aValue.exp();
     const logarithm = bValue.abs() === 0 ? new Complex(-Infinity, 0) : lowerLog(bValue);
     const result = aValue.exp().sub(logarithm);

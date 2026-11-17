@@ -25,10 +25,22 @@ npm run build
 npm run preview
 ```
 
-The automated suite currently contains 83 tests. GitHub Actions also checks
+The automated suite currently contains 89 tests. GitHub Actions also checks
 the tests and production build on Linux. Desktop and 390-pixel phone layouts,
 guided unlocks, saved-progress recovery, earned keys and expression inspection
 have been checked in a browser.
+
+## Reuse an EML expression
+
+The calculator includes a **Use an EML formula** box in both modes. Paste an
+expression, set its `x`/`y` inputs, and choose **Calculate & add to stack**.
+Continue with the calculator keys, or change the inputs and add another
+result. Each stack value keeps the inputs used when it was calculated.
+**Use result for x** lets a calculation feed into the next formula.
+
+Earned discoveries and the expression inspector also offer **Use in
+calculator** to load their recipe directly. The formula box accepts the same
+bounded grammar as challenges: `1`, `eml(a, b)`, `x`, `y`, and earned names.
 
 ## Deploy to Vercel
 

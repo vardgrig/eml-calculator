@@ -1,15 +1,17 @@
 import { useMemo } from 'react';
-import { Check, Code2 } from 'lucide-react';
+import { ArrowRight, Check, Code2 } from 'lucide-react';
 import { expand, expressionStats, parse, printBounded, type Definition, type Expr } from './engine';
 
 export default function DiscoverySummary({
   definition,
   recipe,
   onInspect,
+  onUse,
 }: {
   definition: Definition;
   recipe: string;
   onInspect: (expression: Expr) => void;
+  onUse: (source: string) => void;
 }) {
   const summary = useMemo(() => {
     try {
@@ -69,6 +71,18 @@ export default function DiscoverySummary({
         )}
       </div>
       <p className="discovery-explanation">{definition.explanation}</p>
+      <button
+        className="discovery-use-formula"
+        onClick={() =>
+          onUse(
+            summary && !summary.expansion.includes('[preview shortened]')
+              ? summary.expansion
+              : recipe,
+          )
+        }
+      >
+        Use in calculator <ArrowRight size="0.875rem" />
+      </button>
     </section>
   );
 }
