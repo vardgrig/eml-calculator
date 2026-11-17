@@ -30,7 +30,7 @@ export default function DiscoverySummary({
     <section className="discovery-summary" aria-label="Your discovery in both forms">
       <div className="discovery-summary-heading">
         <span>
-          <Check size={14} /> KEY DISCOVERED
+          <Check size="0.875rem" /> KEY DISCOVERED
         </span>
         <b>{definition.label}</b>
       </div>
@@ -58,7 +58,7 @@ export default function DiscoverySummary({
             <div className="discovery-summary-meta">
               <span>{summary.stats.nodes.toLocaleString()} button presses</span>
               <button onClick={() => onInspect(summary.expression)}>
-                <Code2 size={13} /> Inspect & copy
+                <Code2 size="0.8125rem" /> Inspect & copy
               </button>
             </div>
           </>

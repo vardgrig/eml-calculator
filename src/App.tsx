@@ -332,13 +332,13 @@ export default function App() {
           <a href="#lab">The lab</a>
           <a href="#discoveries">Discoveries</a>
           <button onClick={() => setModal('guide')}>
-            Field guide <BookOpen size={14} />
+            Field guide <BookOpen size="0.875rem" />
           </button>
         </nav>
         <a href={repo} target="_blank" rel="noreferrer" className="github-link">
-          <Github size={18} />
+          <Github size="1.125rem" />
           <span>Source code</span>
-          <ArrowUpRight size={14} />
+          <ArrowUpRight size="0.875rem" />
         </a>
       </header>
       <main>
@@ -358,7 +358,7 @@ export default function App() {
             </p>
             <a className="hero-cta" href="#lab">
               {progress.unlocked.length ? 'Back to the experiment' : 'Let’s build a calculator'}{' '}
-              <ArrowDown size={16} />
+              <ArrowDown size="1rem" />
             </a>
             <span className="hero-note">No account. Just curiosity.</span>
           </div>
@@ -440,7 +440,7 @@ export default function App() {
                   onClick={() => setInspect(top.expr)}
                   aria-label="Inspect EML expression"
                 >
-                  <Code2 size={16} />
+                  <Code2 size="1rem" />
                 </button>
               )}
             </div>
@@ -458,17 +458,17 @@ export default function App() {
                     setCalcNotice('');
                   }}
                 >
-                  <Undo2 size={14} /> Undo
+                  <Undo2 size="0.875rem" /> Undo
                 </button>
                 <button disabled={!stack.length} onClick={() => mutate([])}>
-                  Clear <X size={13} />
+                  Clear <X size="0.8125rem" />
                 </button>
               </div>
             </div>
             <div className="stack-items" aria-label="Calculator stack">
               {!stack.length ? (
                 <span className="stack-placeholder">
-                  Your values will line up here <ArrowRight size={14} />
+                  Your values will line up here <ArrowRight size="0.875rem" />
                 </span>
               ) : (
                 stack.map((item, i) => (
@@ -492,7 +492,7 @@ export default function App() {
               </button>
               <button className="eml-key" onClick={() => operate('eml')}>
                 <span>
-                  EML <ArrowUpRight size={21} />
+                  EML <ArrowUpRight size="1.3125rem" />
                 </span>
                 <small>
                   e<sup>x</sup> − ln(y)
@@ -502,7 +502,7 @@ export default function App() {
             {expanded && (
               <div className="earned-keypad">
                 <div className="keypad-heading">
-                  <Sparkles size={13} /> YOUR EARNED SHORTCUTS <span>{earned.size}</span>
+                  <Sparkles size="0.8125rem" /> YOUR EARNED SHORTCUTS <span>{earned.size}</span>
                 </div>
                 {!earned.size ? (
                   <p className="muted">
@@ -529,7 +529,7 @@ export default function App() {
                               aria-label={`Inspect ${v.label} recipe`}
                               onClick={() => setInspect(sampleTree(v))}
                             >
-                              <Code2 size={12} />
+                              <Code2 size="0.75rem" />
                             </button>
                           </div>
                         ))}
@@ -549,7 +549,7 @@ export default function App() {
                         inputMode="decimal"
                       />
                       <button>
-                        Add to stack <ArrowRight size={14} />
+                        Add to stack <ArrowRight size="0.875rem" />
                       </button>
                     </form>
                     <p className="tiny muted">
@@ -571,7 +571,7 @@ export default function App() {
                 {expanded ? 'A GROWING TOOLKIT' : 'THE ORIGINAL TWO-BUTTON EXPERIENCE'}
               </span>
               <button onClick={() => setModal('guide')}>
-                How the stack works <ArrowUpRight size={12} />
+                How the stack works <ArrowUpRight size="0.75rem" />
               </button>
             </div>
           </div>
@@ -579,7 +579,7 @@ export default function App() {
           <aside className="discovery-panel" aria-label="Current discovery">
             <div className="panel-top">
               <span>
-                <FlaskConical size={15} />{' '}
+                <FlaskConical size="0.9375rem" />{' '}
                 {d.group === 'Foundations' ? 'THE GUIDED START' : 'DISCOVERY CHALLENGE'}
               </span>
               <span>
@@ -598,7 +598,7 @@ export default function App() {
                   className={`${active === f.id ? 'selected' : ''} ${earned.has(f.id) ? 'done' : ''}`}
                   disabled={!f.deps.every((id) => earned.has(id))}
                 >
-                  {earned.has(f.id) ? <Check size={13} /> : <span>{i + 1}</span>}
+                  {earned.has(f.id) ? <Check size="0.8125rem" /> : <span>{i + 1}</span>}
                   {f.label}
                 </button>
               ))}
@@ -631,7 +631,7 @@ export default function App() {
               )}
               {!ready ? (
                 <div className="locked-message">
-                  <LockKeyhole size={18} />
+                  <LockKeyhole size="1.125rem" />
                   <p>
                     First discover{' '}
                     {d.deps
@@ -644,7 +644,7 @@ export default function App() {
                     className="text-button"
                     onClick={() => select(d.deps.find((id) => !earned.has(id))!)}
                   >
-                    Go to prerequisite <ArrowRight size={14} />
+                    Go to prerequisite <ArrowRight size="0.875rem" />
                   </button>
                 </div>
               ) : (
@@ -681,7 +681,7 @@ export default function App() {
                         disabled={!top}
                         title="Copy your calculator's top expression"
                       >
-                        Use stack <ArrowUpRight size={12} />
+                        Use stack <ArrowUpRight size="0.75rem" />
                       </button>
                     </div>
                   </div>
@@ -692,11 +692,11 @@ export default function App() {
                     >
                       {complete ? (
                         <>
-                          <CheckCheck size={16} /> Verify again
+                          <CheckCheck size="1rem" /> Verify again
                         </>
                       ) : (
                         <>
-                          Check my discovery <ArrowRight size={16} />
+                          Check my discovery <ArrowRight size="1rem" />
                         </>
                       )}
                     </button>
@@ -705,7 +705,7 @@ export default function App() {
                       onClick={() => setHint(!hint)}
                       aria-expanded={hint}
                     >
-                      <Lightbulb size={16} />
+                      <Lightbulb size="1rem" />
                       <span>A little hint</span>
                     </button>
                   </div>
@@ -726,7 +726,7 @@ export default function App() {
                         }
                       }}
                     >
-                      Try in calculator <ArrowUpRight size={13} />
+                      Try in calculator <ArrowUpRight size="0.8125rem" />
                     </button>
                   )}
                   {hint && (
@@ -734,7 +734,7 @@ export default function App() {
                       <p>{d.hint}</p>
                       <button onClick={() => setSolution(!solution)}>
                         {solution ? 'Hide recipe' : 'Show a worked recipe'}{' '}
-                        <ChevronRight size={13} />
+                        <ChevronRight size="0.8125rem" />
                       </button>
                       {solution && (
                         <>
@@ -747,7 +747,7 @@ export default function App() {
                               formulaRef.current?.focus();
                             }}
                           >
-                            Try this recipe <ArrowRight size={13} />
+                            Try this recipe <ArrowRight size="0.8125rem" />
                           </button>
                         </>
                       )}
@@ -755,7 +755,7 @@ export default function App() {
                   )}
                   {notice && (
                     <div className={`notice ${notice.kind}`} role="status">
-                      {notice.kind === 'success' && <Check size={16} />}
+                      {notice.kind === 'success' && <Check size="1rem" />}
                       <span>
                         {notice.text}
                         {notice.kind === 'success' && (
@@ -778,7 +778,7 @@ export default function App() {
                         {earned.size === total
                           ? 'You’ve built the full calculator'
                           : 'On to the next discovery'}{' '}
-                        <ArrowRight size={19} />
+                        <ArrowRight size="1.1875rem" />
                       </button>
                     </>
                   )}
@@ -797,7 +797,7 @@ export default function App() {
         </section>
         <div className="workbench-note">
           <span>
-            <Lightbulb size={15} />
+            <Lightbulb size="0.9375rem" />
             <b>A quick tip:</b> EML takes the last two values: the earlier one is x, the top one is
             y.
           </span>
@@ -806,7 +806,7 @@ export default function App() {
               mutate([{ expr: one }, { expr: one }]);
             }}
           >
-            Set up 1, 1 <ArrowRight size={13} />
+            Set up 1, 1 <ArrowRight size="0.8125rem" />
           </button>
         </div>
 
@@ -855,11 +855,11 @@ export default function App() {
                         {String(definitions.indexOf(v) + 1).padStart(2, '0')} / {v.group}
                       </span>
                       {done ? (
-                        <Check size={15} />
+                        <Check size="0.9375rem" />
                       ) : available ? (
                         <span className="available-dot" />
                       ) : (
-                        <LockKeyhole size={13} />
+                        <LockKeyhole size="0.8125rem" />
                       )}
                     </div>
                     <div className="card-symbol">{v.label}</div>
@@ -875,7 +875,7 @@ export default function App() {
                                 .map((dep) => byId[dep].label)
                                 .join(', ')}`}
                       </span>
-                      <ArrowUpRight size={15} />
+                      <ArrowUpRight size="0.9375rem" />
                     </div>
                   </button>
                 );
@@ -885,7 +885,7 @@ export default function App() {
 
         <section className="origin-banner">
           <div className="origin-icon">
-            <BookOpen size={25} />
+            <BookOpen size="1.5625rem" />
           </div>
           <div>
             <p className="eyebrow">GOOD IDEAS ARE WORTH SHARING</p>
@@ -896,7 +896,7 @@ export default function App() {
             </p>
           </div>
           <button onClick={() => setModal('credits')}>
-            Meet the minds behind it <ArrowUpRight size={16} />
+            Meet the minds behind it <ArrowUpRight size="1rem" />
           </button>
         </section>
       </main>
@@ -907,7 +907,7 @@ export default function App() {
         </div>
         <div className="footer-tools">
           <button onClick={downloadProgress}>
-            <Download size={13} /> Export progress
+            <Download size="0.8125rem" /> Export progress
           </button>
           <label className="import-progress">
             Restore progress
@@ -921,13 +921,13 @@ export default function App() {
             />
           </label>
           <button onClick={() => setModal('reset')}>
-            <RotateCcw size={12} /> Start over
+            <RotateCcw size="0.75rem" /> Start over
           </button>
         </div>
         <div className="footer-links">
           <button onClick={() => setModal('credits')}>Credits & sources</button>
           <a href={repo} target="_blank" rel="noreferrer">
-            GitHub <ArrowUpRight size={12} />
+            GitHub <ArrowUpRight size="0.75rem" />
           </a>
         </div>
       </footer>
@@ -954,7 +954,7 @@ export default function App() {
               setInspect(null);
             }}
           >
-            <X size={20} />
+            <X size="1.25rem" />
           </button>
           {inspect ? (
             <>
@@ -1003,7 +1003,7 @@ export default function App() {
                     }
                   }}
                 >
-                  <Copy size={15} />
+                  <Copy size="0.9375rem" />
                   {copied ? 'Copied' : 'Copy EML expression'}
                 </button>
               </div>
@@ -1095,7 +1095,7 @@ export default function App() {
                     Video by Brady Haran and Pete McPartlan
                   </p>
                   <span>
-                    Watch the original video <ExternalLink size={13} />
+                    Watch the original video <ExternalLink size="0.8125rem" />
                   </span>
                 </div>
               </a>
@@ -1110,7 +1110,7 @@ export default function App() {
                   <h3>All elementary functions from a single operator</h3>
                   <p>Andrzej Odrzywołek · arXiv:2603.21852v2</p>
                   <span>
-                    Read the mathematical source <ExternalLink size={13} />
+                    Read the mathematical source <ExternalLink size="0.8125rem" />
                   </span>
                 </div>
               </a>
@@ -1127,7 +1127,7 @@ export default function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                More from Dr James Grime <ArrowUpRight size={14} />
+                More from Dr James Grime <ArrowUpRight size="0.875rem" />
               </a>
             </>
           ) : modal === 'reset' ? (
