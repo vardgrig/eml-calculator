@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta name="theme-color" content="#f5f4ee" />
+    <script>
+      (() => {
+        const system = () =>
+          window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        let theme;
+        try {
+          const saved = localStorage.getItem('eml-lab.theme');
+          theme = saved === 'dark' || saved === 'light' ? saved : system();
+        } catch {
+          theme = system();
+        }
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === 'dark' ? '#141c17' : '#f5f4ee';
+      })();
+    </script>
+    <style>
+      html[data-theme='dark'] {
+        background: #141c17;
+        color-scheme: dark;
+      }
+    </style>
     <meta
       name="description"
       content="Build a scientific calculator from just 1 and EML. Learn the math, solve challenges, and earn every key. No account required."

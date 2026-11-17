@@ -15,8 +15,10 @@ import {
   Github,
   Lightbulb,
   LockKeyhole,
+  Moon,
   RotateCcw,
   Sparkles,
+  Sun,
   Undo2,
   X,
 } from 'lucide-react';
@@ -41,6 +43,7 @@ import { decodeProgress, freshProgress, STORAGE_KEY, type Progress } from './pro
 import DiscoverySummary from './DiscoverySummary';
 import FormulaConsole from './FormulaConsole';
 import { calculate, combine, type Calculation } from './calculator';
+import { useTheme } from './useTheme';
 
 type StackEntry = Calculation & { label?: string };
 type Notice = { text: string; kind: 'error' | 'success' | 'info' };
@@ -86,6 +89,7 @@ const lessonCopy: Record<string, { eyebrow: string; intro: string; steps: string
 };
 
 export default function App() {
+  const { theme, toggleTheme } = useTheme();
   const [progress, setProgress] = useState<Progress>(() => {
     try {
       return decodeProgress(localStorage.getItem(STORAGE_KEY));
@@ -359,11 +363,22 @@ export default function App() {
             Field guide <BookOpen size="0.875rem" />
           </button>
         </nav>
-        <a href={repo} target="_blank" rel="noreferrer" className="github-link">
-          <Github size="1.125rem" />
-          <span>Source code</span>
-          <ArrowUpRight size="0.875rem" />
-        </a>
+        <div className="header-actions">
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-pressed={theme === 'dark'}
+            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+          >
+            {theme === 'dark' ? <Sun size="1rem" /> : <Moon size="1rem" />}
+          </button>
+          <a href={repo} target="_blank" rel="noreferrer" className="github-link">
+            <Github size="1.125rem" />
+            <span>Source code</span>
+            <ArrowUpRight size="0.875rem" />
+          </a>
+        </div>
       </header>
       <main>
         <section className="hero">

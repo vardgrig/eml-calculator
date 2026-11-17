@@ -6,6 +6,9 @@ An interactive, no-account math lab: begin with **1** and **EML**, recover
 exponential, logarithm and subtraction, then solve challenges to grow a
 scientific calculator. Every earned key shows its EML construction.
 
+Use the sun/moon switch in the header to choose a light or dark theme.
+The first visit follows your device’s preference; your choice is saved for later visits.
+
 **[Try EML Lab → emllab.vercel.app](https://emllab.vercel.app/)**
 
 ![EML Lab workbench](docs/preview.jpg)
